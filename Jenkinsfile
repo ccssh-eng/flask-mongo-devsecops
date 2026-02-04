@@ -1,40 +1,72 @@
 pipeline {
-  agent {
-    docker {
-      image 'python:3.11-slim'
-      args '-u root'
-    }
-  }
+  agent none
 
   environment {
     DOCKER_IMAGE = "scedric/flask-mongo-devsecops"
   }
 
   stages {
+
     stage('Lint') {
-      steps {  sh '''
-                python3 -m pip install --user flake8
-                python3 -m flake8 app tests
-               ''' 
+      agent {
+        docker {
+          image 'python:3.11-slim'
+        }
+      }
+      steps {
+        sh '''
+          python -m pip install flake8
+          python -m flake8 app tests
+        '''
       }
     }
 
     stage('Tests') {
-      steps { sh '''
-               python3 -m pip install --user -r requirements.txt pytest
-               python3 -m pytest -v
-              ''' 
+      agent {
+        docker {
+          image 'python:3.11-slim'
+        }
+      }
+      steps {
+        sh '''
+          python -m pip install -r requirements.txt pytest
+          python -m pytest -v
+        '''
       }
     }
 
-    stage('Sonar') {
-      steps { sh 'sonar-scanner' }
+    stage('SonarQube Analysis') {
+      agent {
+        docker {
+          image 'sonarsource/sonar-scanner-cli'
+        }
+      }
+      steps {
+        withSonarQubeEnv('sonar-local') {
+          sh 'sonar-scanner'
+        }
+      }
     }
 
-    stage('Docker') {
+    stage('Docker Build & Push') {
+      agent {
+        docker {
+          image 'docker:27-cli'
+          args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+      }
       steps {
-        sh 'docker build -t user/flask-api .'
-        sh 'docker push user/flask-api'
+        withCredentials([usernamePassword(
+          credentialsId: 'dockerhub-creds',
+          usernameVariable: 'DOCKER_USER',
+          passwordVariable: 'DOCKER_PASS'
+        )]) {
+          sh '''
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker build -t $DOCKER_IMAGE:latest .
+            docker push $DOCKER_IMAGE:latest
+          '''
+        }
       }
     }
   }
