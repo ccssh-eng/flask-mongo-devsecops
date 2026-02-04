@@ -1,5 +1,15 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'python:3.11-slim'
+      args '-u root'
+    }
+  }
+
+  environment {
+    DOCKER_IMAGE = "scedric/flask-mongo-devsecops"
+  }
+
   stages {
     stage('Lint') {
       steps {  sh '''
