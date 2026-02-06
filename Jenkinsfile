@@ -7,6 +7,13 @@ pipeline {
 
   stages {
 
+    stage('Checkout') {
+      agent any
+      steps {
+        checkout scm
+      }
+    }
+
     stage('Lint') {
       agent {
         docker {
