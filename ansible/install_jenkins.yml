@@ -1,0 +1,19 @@
+- name: Deploy Jenkins stack with Docker Compose
+  hosts: local
+  tasks:
+    - name: Stop existing stack if any
+      command: docker-compose -f /tmp/docker-compose.yml down
+      ignore_errors: true
+
+    - name: Copy docker-compose.yml
+      copy:
+        src: ../docker-compose.yml
+        dest: /tmp/docker-compose.yml
+
+    - name: Copy Dockerfile.jenkins
+      copy:
+        src: ../Dockerfile.jenkins
+        dest: /tmp/Dockerfile.jenkins
+
+    - name: Start Jenkins stack
+      command: docker-compose -f /tmp/docker-compose.yml up -d

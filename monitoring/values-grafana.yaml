@@ -1,0 +1,14 @@
+adminUser: admin
+adminPassword: admin
+
+service:
+  type: NodePort
+
+dashboardsConfigMaps:
+  default: grafana-dashboards
+
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    folder: /var/lib/grafana/dashboards

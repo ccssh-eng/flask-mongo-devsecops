@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  flask-api-dashboard.json: |
+    {
+      "annotations": { "list": [] },
+      "panels": [],
+      "schemaVersion": 30,
+      "title": "Flask API Dashboard",
+      "version": 1
+    }

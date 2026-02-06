@@ -42,7 +42,7 @@ pipeline {
         }
       }
       steps {
-        withSonarQubeEnv('sonar-local') {
+        withSonarQubeEnv('sonar-ovh') {
           sh 'sonar-scanner'
         }
       }

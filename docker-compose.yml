@@ -1,50 +1,23 @@
-version: "3.9"
-
 services:
-  api:
-    image: flask-mongo-devsecops:1.0
-    container_name: flask-api
-    restart: unless-stopped
-    ports:
-      - "5000:5000"
-    environment:
-      MONGO_URI: mongodb://mongo:27017
-    depends_on:
-      - mongo
-    networks:
-      - devsecops-net
-
   mongo:
     image: mongo:6
-    container_name: mongo
-    restart: unless-stopped
-    volumes:
-      - mongo_data:/data/db
-    networks:
-      - devsecops-net
 
   sonarqube:
     image: sonarqube:lts
-    container_name: sonarqube
-    ports:
-      - "9000:9000"
-    networks:
-      - devsecops-net
 
   jenkins:
-    image: jenkins/jenkins:lts
-    container_name: jenkins
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+
+    user: root
     ports:
-      - "8080:8080"
+      -  "8080:8080"
+      -  "50000:50000"
     volumes:
       - jenkins_data:/var/jenkins_home
-    networks:
-      - devsecops-net
+      - /var/run/docker.sock:/var/run/docker.sock 
 
 volumes:
-  mongo_data:
   jenkins_data:
-
-networks:
-  devsecops-net:
-    driver: bridge
+  mongo_data:
