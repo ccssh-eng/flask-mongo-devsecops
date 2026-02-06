@@ -18,6 +18,7 @@ pipeline {
       agent {
         docker {
           image 'python:3.11-slim'
+          reuseNode true
         }
       }
       steps {
@@ -32,6 +33,7 @@ pipeline {
       agent {
         docker {
           image 'python:3.11-slim'
+          reuseNode true
         }
       }
       steps {
@@ -46,6 +48,7 @@ pipeline {
       agent {
         docker {
           image 'sonarsource/sonar-scanner-cli'
+          reuseNode true
         }
       }
       steps {
@@ -60,6 +63,7 @@ pipeline {
         docker {
           image 'docker:27-cli'
           args '-v /var/run/docker.sock:/var/run/docker.sock'
+          reuseNode true
         }
       }
       steps {
