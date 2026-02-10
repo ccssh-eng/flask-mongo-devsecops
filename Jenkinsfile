@@ -3,6 +3,7 @@ pipeline {
 
   environment {
     DOCKER_IMAGE = "scedric/flask-mongo-devsecops"
+    VENV = ".venv"
   }
 
   stages {
@@ -10,7 +11,10 @@ pipeline {
     stage('Lint') {
       steps {
         sh '''
-          python3 -m pip install flake8
+          python3 -m venv $VENV
+          . $VENV/bin/activate
+          pip install --upgrade pip
+          pip install flake8
           flake8 app tests
         '''
       }
@@ -19,7 +23,8 @@ pipeline {
     stage('Tests') {
       steps {
         sh '''
-          python3 -m pip install -r requirements.txt pytest
+          . $VENV/bin/activate
+          pip install -r requirements.txt pytest
           pytest -v
         '''
       }
