@@ -10,7 +10,7 @@ pipeline {
     stage('Lint') {
       steps {
         sh '''
-          pip3 install flake8
+          python3 -m pip install flake8
           flake8 app tests
         '''
       }
@@ -19,7 +19,7 @@ pipeline {
     stage('Tests') {
       steps {
         sh '''
-          pip3 install -r requirements.txt pytest
+          python3 -m pip install -r requirements.txt pytest
           pytest -v
         '''
       }
