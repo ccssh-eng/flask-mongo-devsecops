@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     unzip \
+    docker.io \
  && rm -rf /var/lib/apt/lists/*
 
 # Sonar Scanner
@@ -19,5 +20,8 @@ RUN curl -fsSL https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/s
  && rm /tmp/sonar-scanner.zip
 
 ENV PATH="/usr/local/bin:${PATH}"
+
+# Donner accès Docker au user jenkins
+RUN usermod -aG docker jenkins
 
 USER jenkins
