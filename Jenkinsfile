@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent any
 
   environment {
     DOCKER_IMAGE = "scedric/flask-mongo-devsecops"
@@ -8,49 +8,30 @@ pipeline {
   stages {
 
     stage('Checkout') {
-      agent any
       steps {
         checkout scm
       }
     }
 
     stage('Lint') {
-      agent {
-        docker {
-          image 'python:3.11-slim'
-          reuseNode true
-        }
-      }
       steps {
         sh '''
-          python -m pip install flake8
-          python -m flake8 app tests
+          pip3 install flake8
+          flake8 app tests
         '''
       }
     }
 
     stage('Tests') {
-      agent {
-        docker {
-          image 'python:3.11-slim'
-          reuseNode true
-        }
-      }
       steps {
         sh '''
-          python -m pip install -r requirements.txt pytest
-          python -m pytest -v
+          pip3 install -r requirements.txt pytest
+          pytest -v
         '''
       }
     }
 
     stage('SonarQube Analysis') {
-      agent {
-        docker {
-          image 'sonarsource/sonar-scanner-cli'
-          reuseNode true
-        }
-      }
       steps {
         withSonarQubeEnv('sonar-ovh') {
           sh 'sonar-scanner'
@@ -59,13 +40,6 @@ pipeline {
     }
 
     stage('Docker Build & Push') {
-      agent {
-        docker {
-          image 'docker:27-cli'
-          args '-v /var/run/docker.sock:/var/run/docker.sock'
-          reuseNode true
-        }
-      }
       steps {
         withCredentials([usernamePassword(
           credentialsId: 'dockerhub-creds',
@@ -82,3 +56,4 @@ pipeline {
     }
   }
 }
+
