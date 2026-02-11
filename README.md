@@ -29,17 +29,15 @@ Objectifs DevSecOps
 
  Architecture globale
 
-Développer ----------> GitHub dépôt (privé) -----> GitHub Actions (CI)   ----> Jenkins (Docker) (CI) --->
-            git push                                   - Lint                     - Lint/Tests
-                                                       - Tests                    - SonarQube scan
-                                                       - Docker build             - Docker push
+Développer ---git push-------> GitHub dépôt (privé) -----> GitHub Actions (CI) - Lint, Tests, Docker build  ----> 
 
-
-----> Kubernetes(Minikube) ----------> Monitoring
-            - Flask API                 - Prometheus 
-            - MongoDB                   - Grafana
-            - SonarQube
-
+----> Jenkins (Docker) (CI) - Lint/Tests, SonarQube scan, Docker push --->
+                                                                    
+                                                                    
+----> Kubernetes(Minikube) - Flask API, MongoDB, SonarQube ----------> Monitoring - Promethus, Grafana
+            
+            
+            
 Stack technique
 
 Domaine	               Outils
