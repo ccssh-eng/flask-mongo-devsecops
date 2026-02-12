@@ -1,19 +1,21 @@
-flask-mongo-devsecops
+Flask Mongo DevSecOps Platform
 
-Projet DevSecOps complet - CI/CD, Qualité, Sécurité et Infrastructure as Code
+Projet DevSecOps de bout en bout démontrant l’automatisation CI/CD, la conteneurisation sécurisée,
+le déploiement de Kubernetes, l’infrastructure en tant que code et l’intégration de surveillance.
 
-Présentation
+Pourquoi ce projet ?
 
-flask-mongo-devsecops est un projet démontrant la mise en œuvre complète et réaliste d’une chaîne
-DevSecOps moderne autour d’une application Flask connectée à MongoDB.
+Ce projet simule un workflow DevSecOps réaliste dans un environnement maîtrisé,
+couvrant le développement applicatif, l’automatisation CI/CD, la sécurité des conteneurs,
+l’orchestration Kubernetes, l’Infrastructure as Code et le monitoring.
 
-L’objectif n’est pas seulement de faire fonctionner une application, mais de :
--	garantir la qualité du code
--	automatiser les tests
--	sécuriser les secrets
--	industrialiser les builds
--	maîtriser le déploiement Kubernetes
--	intégrer le monitoring
+Il démontre une expérience pratique sur :
+
+- La mise en place de pipelines CI/CD sécurisés
+- La gestion du cycle de vie des conteneurs
+- La mise en réseau et l’orchestration Kubernetes
+- L’administration d’environnements DevOps sous Linux
+
 Ce projet reflète des problématiques terrain, rencontrées en environnement professionnel.
 
 Objectifs DevSecOps
@@ -27,15 +29,21 @@ Objectifs DevSecOps
 -	Monitoring (Prometheus & Grafana)
 -	Gestion sécurisée des credentials
 
- Architecture globale
+Architecture Overview
 
-Développer ---git push-------> GitHub dépôt (privé) -----> GitHub Actions (CI) - Lint, Tests, Docker build  ----> 
-
-----> Jenkins (Docker) (CI) - Lint/Tests, SonarQube scan, Docker push --->
-                                                                    
-                                                                    
-----> Kubernetes(Minikube) - Flask API, MongoDB, SonarQube ----------> Monitoring - Promethus, Grafana
-            
+Developer >>> GitHub >>> GitHub Actions (CI)
+                         |
+                         v
+                     Jenkins (CD)
+                         |
+                         v
+                 Docker Registry
+                         |
+                         v
+                 Kubernetes (Minikube)
+                         |
+                         v
+            Monitoring (Prometheus & Grafana)
             
             
 Stack technique
