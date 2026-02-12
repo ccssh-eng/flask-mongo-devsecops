@@ -153,6 +153,12 @@ Security Measures
 - Branch protection rules enabled
 - Secure dependency management
 
+Security Features
+
+- Environment-based configuration
+- Dependency vulnerability scanning
+- Secure Docker container (non-root)
+
  Commandes clés
 
 Lancer la stack locale
