@@ -56,6 +56,7 @@ Monitoring	  Prometheus, Grafana
 
 CI / CD - Vue d’ensemble
 CI - GitHub Actions
+
 -	Lint Python
 -	Tests unitaires
 -	Build image Docker
@@ -145,19 +146,30 @@ Playbooks fournis pour :
 -	Jenkins Credentials Store
 -	Secrets Kubernetes
 
+Security Measures
+
+- Pas de hardcoded secrets
+- .env exclué via .gitignore
+- Branch protection rules enabled
+- Secure dependency management
+
  Commandes clés
 
-# Lancer la stack locale
-docker compose up -d
+Lancer la stack locale
 
-# Démarrer Kubernetes
-minikube start driver=docker
+     docker compose up -d
 
-# Déployer l’application
-kubectl apply -f   k8s/
+Démarrer Kubernetes
+    
+     minikube start driver=docker
 
-# Port-forward SonarQube
-kubectl   port-forward   -n sonarqube   svc/sonarqube 9000:9000   --address 0.0.0.0
+Déployer l’application
+
+     kubectl apply -f   k8s/
+
+Port-forward SonarQube
+
+     kubectl   port-forward   -n sonarqube   svc/sonarqube 9000:9000   --address 0.0.0.0
 
  Leçons Appris 
 
@@ -169,9 +181,10 @@ kubectl   port-forward   -n sonarqube   svc/sonarqube 9000:9000   --address 0.0.
 -	La documentation fait partie intégrante du DevSecOps
 
  Axes d’amélioration
+
 -	Déploiement Kubernetes sur cluster cloud (OVH)
 -	Ingress public avec TLS
 -	Sécurité réseau avancée (NetworkPolicy)
 -	Scan de vulnérabilités images (Trivy)
 -	GitOps (ArgoCD)
-                                   -------------------------------------------------------
+                       
