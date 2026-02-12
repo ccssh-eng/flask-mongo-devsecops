@@ -31,19 +31,8 @@ Objectifs DevSecOps
 
 Architecture Overview
 
-Developer >>> GitHub >>> GitHub Actions (CI)
-                         |
-                         v
-                     Jenkins (CD)
-                         |
-                         v
-                 Docker Registry
-                         |
-                         v
-                 Kubernetes (Minikube)
-                         |
-                         v
-            Monitoring (Prometheus & Grafana)
+Developer >>> GitHub >>> GitHub Actions (CI) >>> Jenkins (CD) >>> Docker Registry >>> Kubernetes (Minikube) >>> 
+Monitoring (Prometheus & Grafana)
             
             
 Stack technique
