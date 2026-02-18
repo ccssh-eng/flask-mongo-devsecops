@@ -16,7 +16,7 @@ spec:
         - name: dockerhub-secret
       containers:
       - name: flask-api
-        image: scedric/flask-mongo-devsecops:latest
+        image: scedric/flask-mongo-devsecops:
         env:
         - name: MONGO_URI
           value: mongodb://mongo:27017
