@@ -13,22 +13,21 @@ spec:
         app: flask-api
     spec:
       imagePullSecrets:
-        - name: dockerhub-secret
+      - name: dockerhub-secret
       containers:
       - name: flask-api
-        image: scedric/flask-mongo-devsecops:
-        env:
-        - name: MONGO_URI
-          value: mongodb://mongo:27017
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "256Mi"
-            cpu: "300m"
+        image: scedric/flask-mongo-devsecops:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "300m"
+            memory: "256Mi"
+
 ---
 apiVersion: v1
 kind: Service
