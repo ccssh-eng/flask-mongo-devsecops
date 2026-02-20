@@ -12,8 +12,6 @@ spec:
       labels:
         app: flask-api
     spec:
-      imagePullSecrets:
-      - name: dockerhub-secret
       containers:
       - name: flask-api
         image: scedric/flask-mongo-devsecops:latest
