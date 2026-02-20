@@ -30,6 +30,38 @@ pipeline {
       }
     }
 
+    stage('Smoke Test DEV') {
+      steps {
+        script {
+          sleep 25
+          sh "curl -f http://dev.local/health"
+        }
+      }
+    }
+    stage('Smoke Test PROD') {
+      steps {
+        script {
+          sleep 30
+            sh 'curl -f http://prod.local/health'
+        }
+      }
+    }
+
+    stage('Rollback if PROD failed') {
+      when {
+        expression { currentBuild.currentResult == 'FAILURE' }
+      }
+      steps {
+        script {
+          sh '''
+          git checkout prod
+          git revert HEAD --no-edit
+          git push origin prod
+          '''
+        }
+      }
+    }
+
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('sonar-ovh') {
