@@ -4,3 +4,5 @@ python-dotenv
 
 pytest
 flake8
+
+prometheus-client

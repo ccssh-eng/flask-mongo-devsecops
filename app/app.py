@@ -1,13 +1,27 @@
 from flask import Flask, jsonify
 from app.db import get_collection
-
+from prometheus_client import Counter, generate_latest
+from flask import Response
 
 app = Flask(__name__)
 
 
+REQUEST_COUNT = Counter(
+    "flask_requests_total",
+    "Total number of requests",
+    ["method", "endpoint"]
+)
+
+
 @app.route("/health", methods=["GET"])
 def health():
+    REQUEST_COUNT.labels(method="GET", endpoint="/health").inc()
     return jsonify({"status": "UP"})
+
+
+@app.route("/metrics")
+def metrics():
+    return Response(generate_latest(), mimetype="text/plain")
 
 
 @app.route("/items", methods=["GET"])
