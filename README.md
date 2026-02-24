@@ -33,8 +33,6 @@ Architecture Overview
 
 Developer >>> GitHub >>> GitHub Actions (CI) >>> Jenkins (CD) >>> Docker Registry >>> Kubernetes (Minikube) >>> 
 Monitoring (Prometheus & Grafana)
-            
-            
 Stack technique
 
 Domaine	               Outils
@@ -163,7 +161,7 @@ Lancer la stack locale
      docker compose up -d
 
 Démarrer Kubernetes
-    
+
      minikube start driver=docker
 
 Déployer l’application
@@ -183,11 +181,3 @@ Port-forward SonarQube
 -	Supprimer et recréer un job Jenkins est parfois plus sain que réparer
 -	La documentation fait partie intégrante du DevSecOps
 
- Axes d’amélioration
-
--	Déploiement Kubernetes sur cluster cloud (OVH)
--	Ingress public avec TLS
--	Sécurité réseau avancée (NetworkPolicy)
--	Scan de vulnérabilités images (Trivy)
--	GitOps (ArgoCD)
-                       
